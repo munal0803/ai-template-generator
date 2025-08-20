@@ -1,19 +1,19 @@
-name: Deploy React App
+name: Deploy Website
 
 on:
   push:
     branches:
-      - main   # or master if your repo uses master
+      - main  # or master, whichever is your default branch
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -27,6 +27,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.DEPLOY_TOKEN }}   # default secure token
+          github_token: ${{ secrets.DEPLOY_TOKEN }}
           publish_dir: ./dist
-
