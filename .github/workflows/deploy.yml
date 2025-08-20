@@ -1,22 +1,23 @@
-name: Deploy Website
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # or master, whichever is your default branch
+      - main   # Change if your main branch has a different name
+  workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -27,5 +28,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.DEPLOY_TOKEN }}
-          publish_dir: ./dist
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./dist   # <- for Vite/React build output
