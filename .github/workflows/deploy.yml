@@ -1,13 +1,12 @@
-name: Deploy React App to GitHub Pages
+name: Deploy React App
 
 on:
   push:
     branches:
-      - main   # Trigger deployment on push to main branch
-  workflow_dispatch: # Also allow manual trigger from GitHub UI
+      - main   # or master if your repo uses master
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,9 +27,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}   # GitHub Pages deploy token
+          github_token: ${{ secrets.DEPLOY_TOKEN }}   # default secure token
           publish_dir: ./dist
-          cname: ""   # remove if you have custom domain
 
-      - name: Pass custom token
-        run: echo "Deploy token is ${{ secrets.DEPLOY_TOKEN }}"
